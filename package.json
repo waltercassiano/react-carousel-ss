@@ -1,0 +1,9 @@
+{
+  "name": "react-carousel-ss",
+  "version": "1.0.0",
+  "description": "A simple and small Carousel",
+  "main": "index.js",
+  "repository": "https://github.com/waltercassiano/react-carousel-ss.git",
+  "author": "Walter Cassiano <waltercassiano@gmail.com>",
+  "license": "MIT"
+}
