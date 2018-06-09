@@ -5,5 +5,17 @@
   "main": "index.js",
   "repository": "https://github.com/waltercassiano/react-carousel-ss.git",
   "author": "Walter Cassiano <waltercassiano@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-jest": "^23.0.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "jest": "^23.1.0",
+    "react": "^16.4.0",
+    "react-test-renderer": "^16.4.0",
+    "recompose": "^0.27.1"
+  },
+  "scripts": {
+    "test": "jest"
+  }
 }
