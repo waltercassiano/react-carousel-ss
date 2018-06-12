@@ -3,9 +3,19 @@ import { withProps } from "recompose";
 import enhance from "./_carousel.js";
 
 class Carousel extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
-    return <div>{console.log(item)}</div>;
+    const { nextElement, prevElement } = this.props;
+    return (
+      <div>
+        {this.props.children}
+        {nextElement}
+        {prevElement}
+      </div>
+    );
   }
 }
 
-export default enhance((({item}) => Carousel))
+export default enhance(Carousel);
