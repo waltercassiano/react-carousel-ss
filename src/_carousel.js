@@ -1,22 +1,25 @@
 import React from "react";
 import {
   compose,
-  withProps,
   withHandlers,
   mapProps,
   withState,
-  lifecycle,
   setDisplayName
 } from "recompose";
-import { get, size } from "lodash";
+import { get, size, flow } from "lodash";
 
-const addClassToSlides = e => {
+const addClassToSlides = (e, numberItems) => {
   const children = [];
   for (let el in e) {
     children.push(
-      React.cloneElement(e[el], { className: "rcss-item-" + el, key: el })
+      React.cloneElement(e[el], {
+        className: "rcss-item-" + el,
+        key: el,
+        style: { width: 100 / numberItems + "%" }
+      })
     );
   }
+
   return children;
 };
 
@@ -24,9 +27,13 @@ const _mapProps = mapProps(props => {
   return {
     prev: get(props, "prev", false),
     next: get(props, "next", false),
+    showItemsNumer: get(props, "showItemsNumer", 1),
     children:
       get(props, "children", null) !== null
-        ? addClassToSlides(get(props, "children"))
+        ? addClassToSlides(
+            get(props, "children"),
+            get(props, "showItemsNumer", 1)
+          )
         : null,
     prevElement: props.prev
       ? React.cloneElement(get(props, "prevElement", <span>prev</span>), {
@@ -45,25 +52,21 @@ export default compose(
   setDisplayName({
     displayName: "react-carousel-ss"
   }),
-  
+
   _mapProps,
-  
+
   withState("activeSlide", "onChangeSlide", 0),
-  
+
   withState("numberSlide", "updateNumberSlide", props => {
     return size(get(props, "children", 0));
   }),
-  
+
   withHandlers({
-  
     onClickPrev: ({ onChangeSlide }) => () => {
-      
-      onChangeSlide(n => n > 0 ? n - 1 : n);
+      onChangeSlide(n => (n > 0 ? n - 1 : n));
     },
     onClickNext: ({ onChangeSlide, numberSlide }) => () => {
-      
-      onChangeSlide(n => n < numberSlide ?  n + 1 : n);
+      onChangeSlide(n => (n < numberSlide - 1 ? n + 1 : n));
     }
-  }),
-
+  })
 );

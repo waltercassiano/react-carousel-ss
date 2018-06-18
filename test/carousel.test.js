@@ -2,21 +2,21 @@ import React from "react";
 import Carousel from "../src/carousel.js";
 import { mount, render, configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import { findIndex } from "lodash";
+import { times } from "lodash";
 
 configure({ adapter: new Adapter() });
 
-test("Render Component with default props", () => {
+test("Render Component - default props", () => {
   const component = render(<Carousel />);
   expect(component).toMatchSnapshot();
 });
 
-test("Render Component with prev and next active", () => {
+test("Render Component - prev and next active", () => {
   const component = render(<Carousel prev={true} next={true} />);
   expect(component).toMatchSnapshot();
 });
 
-test("Render Component with prev and click on prev", () => {
+test("Render Component - prev and click on prev", () => {
   const component = mount(
     <Carousel prev={true} next={true}>
       <div>1</div>
@@ -24,17 +24,19 @@ test("Render Component with prev and click on prev", () => {
       <div>3</div>
     </Carousel>
   );
-  
-  const currentIndex = component.find("Carousel").getElements()[0].props.activeSlide;
-  
+
+  const currentIndex = component.find("Carousel").getElements()[0].props
+    .activeSlide;
+
   component.find(".rcss-prev").simulate("click");
 
-  const nextIndex = component.find("Carousel").getElements()[0].props.activeSlide;
-  
+  const nextIndex = component.find("Carousel").getElements()[0].props
+    .activeSlide;
+
   expect(nextIndex).toBe(currentIndex - nextIndex);
 });
 
-test("Render Component with next and click on next", () => {
+test("Render Component - next and click on next", () => {
   const component = mount(
     <Carousel prev={true} next={true}>
       <div>1</div>
@@ -42,11 +44,76 @@ test("Render Component with next and click on next", () => {
       <div>3</div>
     </Carousel>
   );
-  const currentIndex = component.find("Carousel").getElements()[0].props.activeSlide;
-  
+  const currentIndex = component.find("Carousel").getElements()[0].props
+    .activeSlide;
+
   component.find(".rcss-next").simulate("click");
 
-  const nextIndex = component.find("Carousel").getElements()[0].props.activeSlide;
-  
+  const nextIndex = component.find("Carousel").getElements()[0].props
+    .activeSlide;
+
   expect(nextIndex).toBe(currentIndex + nextIndex);
 });
+
+test("Render Component - go to last slide then return to the first", () => {
+  const component = mount(
+    <Carousel prev={true} next={true}>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+      <div>slide</div>
+    </Carousel>
+  );
+
+  // Go to Last Slide
+  const numberSlide =
+    component.find("Carousel").getElements()[0].props.numberSlide - 1;
+
+  times(numberSlide, () => {
+    component.find(".rcss-next").simulate("click");
+  });
+
+  const activeSlideNext = component.find("Carousel").getElements()[0].props
+    .activeSlide;
+  expect(activeSlideNext).toBe(numberSlide);
+
+  // Return to first Slide
+  times(numberSlide, () => {
+    component.find(".rcss-prev").simulate("click");
+  });
+
+  const activeSlidePrev = component.find("Carousel").getElements()[0].props
+    .activeSlide;
+
+  expect(activeSlidePrev).toBe(0);
+});
+
+const visibleItems = 1;
+test(
+  "Render Component - default visible items equal to " + visibleItems,
+  () => {
+    const component = mount(
+      <Carousel prev={true} next={true} showItemsNumer={showItemsNumer}>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </Carousel>
+    );
+    const showItemsNumer = component.find("Carousel").getElements()[0].props
+      .showItemsNumer;
+    expect(showItemsNumer).toBe(showItemsNumer);
+  }
+);
