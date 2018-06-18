@@ -1,18 +1,16 @@
 import React, { Component } from "react";
-import { withProps } from "recompose";
+import { toClass } from "recompose";
 import enhance from "./_carousel.js";
 
+
 class Carousel extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    const { nextElement, prevElement } = this.props;
+    const { nextElement, prevElement, children } = this.props;
     return (
       <div>
-        {this.props.children}
-        {nextElement}
-        {prevElement}
+        {nextElement ? React.cloneElement(nextElement, { onClick: this.props.onClickNext }) : null }
+        {prevElement ? React.cloneElement(prevElement, { onClick: this.props.onClickPrev }) : null }
+        {children}
       </div>
     );
   }
