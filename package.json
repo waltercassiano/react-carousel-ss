@@ -1,11 +1,15 @@
 {
   "name": "react-carousel-ss",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple and small Carousel",
   "main": "index.js",
   "repository": "https://github.com/waltercassiano/react-carousel-ss.git",
   "author": "Walter Cassiano <waltercassiano@gmail.com>",
   "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "recompose": "^0.27.1"
+  },
   "devDependencies": {
     "babel-jest": "^23.0.1",
     "babel-preset-env": "^1.7.0",
@@ -13,10 +17,8 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^23.1.0",
-    "lodash": "^4.17.10",
     "react": "^16.4.0",
     "react-test-renderer": "^16.4.0",
-    "recompose": "^0.27.1",
     "react-dom": "16"
   },
   "scripts": {
