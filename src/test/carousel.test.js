@@ -1,5 +1,5 @@
 import React from "react";
-import Carousel from "../src/carousel.js";
+import Carousel from "../lib/carousel.js";
 import { mount, render, configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { times } from "lodash";
@@ -106,14 +106,14 @@ test(
   "Render Component - default visible items equal to " + visibleItems,
   () => {
     const component = mount(
-      <Carousel prev={true} next={true} showItemsNumer={showItemsNumer}>
+      <Carousel prev={true} next={true} showItemsNumber={visibleItems}>
         <div>1</div>
         <div>2</div>
         <div>3</div>
       </Carousel>
     );
-    const showItemsNumer = component.find("Carousel").getElements()[0].props
-      .showItemsNumer;
-    expect(showItemsNumer).toBe(showItemsNumer);
+    const showItemsNumber = component.find("Carousel").getElements()[0].props
+      .showItemsNumber;
+    expect(visibleItems).toBe(showItemsNumber);
   }
 );
