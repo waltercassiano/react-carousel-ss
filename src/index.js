@@ -11,7 +11,7 @@ ReactDOM.render(
   <Carousel
     prev={true}
     next={true}
-    showItemsNumber={2}
+    showItemsNumber={5}
     prevElement={<button style={{ color: "red" }}>prev</button>}
     nextElement={<button>next</button>}
     transition={"all 0.5s linear"}

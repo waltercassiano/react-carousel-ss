@@ -5,7 +5,8 @@ import {
   mapProps,
   withState,
   setDisplayName,
-  lifecycle
+  lifecycle,
+  chunk,
 } from "recompose";
 import { get, size } from "lodash";
 
@@ -43,7 +44,7 @@ const addClassToSlides = (e, numberItems, styles) => {
         className: "rcss-item-" + el,
         key: el,
         style: {
-          width: 100 / numberItems + "%",
+          width: "100%",
           ...styles,
           ...e[el].props.style
         }
@@ -91,7 +92,7 @@ const _mapProps = mapProps(props => {
       ...get(props, "rootStyle", {}),
       height: get(props, "wrapperHeight", "500px"),
     },
-    slidesStyle: { ...styles.slidesStyle, ...get(props, "slidesStyle", {}) },
+    slidesStyle: { ...styles.slidesStyle, ...get(props, "slidesStyle", {}), width: 100 / get(props, "showItemsNumber", 1) + "%" },
     styleControlWrapper: {
       ...styles.styleControlWrapper,
       ...get(props, "styleControlWrapper", {})

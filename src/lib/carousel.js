@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import enhance from "./_carousel";
 import ContainerDimensions from "react-container-dimensions";
+import SwipeableViews from 'react-swipeable-views';
 
 class Carousel extends Component {
   render() {
@@ -12,12 +13,14 @@ class Carousel extends Component {
       wrapperSlidesWidth,
       styleControlWrapper,
       slidePosition,
+      slidesStyle
     } = this.props;
+    console.log(children)
     return (
       <ContainerDimensions>
         {({ width }) => {
           return (
-            <div style={{...rootStyle, width: width}}>
+            <div style={{...rootStyle }}>
               <div style={styleControlWrapper}>
                 {nextElement
                   ? React.cloneElement(prevElement, {
@@ -30,9 +33,11 @@ class Carousel extends Component {
                     })
                   : null}
               </div>
-              <div style={{ ...wrapperSlidesWidth, ...slidePosition }}>
-                {children}
-              </div>
+              
+                <SwipeableViews enableMouseEvents={true} interval={1000} children={children} slideStyle={slidesStyle}/>
+                  
+                
+              
             </div>
           );
         }}
