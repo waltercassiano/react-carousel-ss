@@ -8,19 +8,17 @@ class Carousel extends Component {
     const {
       nextElement,
       prevElement,
-      children,
       rootStyle,
-      wrapperSlidesWidth,
       styleControlWrapper,
-      slidePosition,
-      slidesStyle
+      slidesStyle,
+      activeSlide,
+      slides
     } = this.props;
-    console.log(children)
     return (
       <ContainerDimensions>
         {({ width }) => {
           return (
-            <div style={{...rootStyle }}>
+            <div style={{ ...rootStyle }}>
               <div style={styleControlWrapper}>
                 {nextElement
                   ? React.cloneElement(prevElement, {
@@ -33,11 +31,13 @@ class Carousel extends Component {
                     })
                   : null}
               </div>
-              
-                <SwipeableViews enableMouseEvents={true} interval={1000} children={children} slideStyle={slidesStyle}/>
-                  
-                
-              
+                <SwipeableViews
+                  enableMouseEvents={true}
+                  index={activeSlide}
+                  interval={1000}
+                  children={slides.map(a => <div style={{display: "flex"}}>{a}</div>)}
+                  slideStyle={ slidesStyle }
+                />
             </div>
           );
         }}

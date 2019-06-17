@@ -4,17 +4,16 @@ import {
   withHandlers,
   mapProps,
   withState,
-  setDisplayName,
-  lifecycle,
-  chunk,
+  setDisplayName
 } from "recompose";
-import { get, size } from "lodash";
+import { get, size, chunk } from "lodash";
 
 const styles = {
   rootStyle: {
     position: "relative",
     boxSizing: "border-box",
-    overflow: "hidden"
+    overflow: "hidden",
+    width: "100%"
   },
   wrapperSlidesStyle: {
     position: "absolute",
@@ -36,7 +35,7 @@ const styles = {
   }
 };
 
-const addClassToSlides = (e, numberItems, styles) => {
+const addClassToSlides = (e, styles) => {
   const children = [];
   for (let el in e) {
     children.push(
@@ -53,26 +52,6 @@ const addClassToSlides = (e, numberItems, styles) => {
   }
 
   return children;
-};
-
-const calcWrapperSlidesWidth = props => {
-  const s = {
-    ...styles.wrapperSlidesStyle,
-    ...get(props, "wrapperSlidesStyle", {}),
-    width: props.numberSlide * (100 / props.showItemsNumber) + "%"
-  };
-  return s;
-};
-
-const calcWrapperSlidesPosition = props => {
-  const step = 100 / props.showItemsNumber;
-
-  const wrapperSlidesStyle = {
-    ...props.wrapperSlidesStyle,
-    left: "-" + (props.activeSlide === 0 ? 0 : step * props.activeSlide + "%")
-  };
-
-  return wrapperSlidesStyle;
 };
 
 const _mapProps = mapProps(props => {
@@ -92,7 +71,7 @@ const _mapProps = mapProps(props => {
       ...get(props, "rootStyle", {}),
       height: get(props, "wrapperHeight", "500px"),
     },
-    slidesStyle: { ...styles.slidesStyle, ...get(props, "slidesStyle", {}), width: 100 / get(props, "showItemsNumber", 1) + "%" },
+    slidesStyle: { ...styles.slidesStyle, ...get(props, "slidesStyle", {}), width: "100%" },
     styleControlWrapper: {
       ...styles.styleControlWrapper,
       ...get(props, "styleControlWrapper", {})
@@ -101,8 +80,7 @@ const _mapProps = mapProps(props => {
       get(props, "children", null) !== null
         ? addClassToSlides(
             get(props, "children"),
-            get(props, "showItemsNumber", 1),
-            { ...styles.slidesStyle, ...get(props, "slidesStyle", {}) }
+            { ...styles.slidesStyle, ...get(props, "slidesStyle", {})}
           )
         : null,
     prevElement: props.prev
@@ -124,54 +102,18 @@ export default compose(
   setDisplayName({
     displayName: "react-carousel-ss"
   }),
-
   _mapProps,
-
   withState("activeSlide", "onChangeSlide", 0),
-
-  withState("numberSlide", "updateNumberSlide", props => {
-    return size(get(props, "children", 0));
-  }),
-
-  withState("wrapperSlidesWidth", "updateWrapperWidth", props =>
-    calcWrapperSlidesWidth(props)
-  ),
-
-  withState("slidePosition", "updateSlidePosition", props => {
-    calcWrapperSlidesPosition(props);
-  }),
-  withHandlers({
-    updateWidth: props => () => {
-      const { updateSlidePosition } = props;
-      updateSlidePosition(() => {
-        return calcWrapperSlidesPosition(props);
-      });
-    }
-  }),
+  withState("numberSlide", "updateNumberSlide", props => size(chunk(get(props, "children", 0), get(props, "showItemsNumber")))),
+  withState("slides", "slidesAll", props => chunk(get(props, "children", 0), get(props, "showItemsNumber"))),
   withHandlers({
     onClickPrev: props => () => {
       const { onChangeSlide } = props;
-      onChangeSlide(n => {
-        const currentSlide = n > 0 ? --n : n;
-        return currentSlide;
-      });
+      onChangeSlide(n => n > 0 ? --n : n)
     },
     onClickNext: props => () => {
       const { onChangeSlide, numberSlide } = props;
-      onChangeSlide(n => {
-        const currentSlide =
-          n < numberSlide - 1 && props.showItemsNumber + n < numberSlide
-            ? ++n
-            : n;
-        return currentSlide;
-      });
-    }
-  }),
-  lifecycle({
-    componentWillReceiveProps(prevProps) {
-      if (this.props.activeSlide !== prevProps.activeSlide) {
-        this.props.updateWidth(prevProps);
-      }
+      onChangeSlide(n => n < numberSlide - 1  ? ++n : n);
     }
   })
 );
