@@ -35,7 +35,7 @@ class Carousel extends Component {
                   enableMouseEvents={true}
                   index={activeSlide}
                   interval={1000}
-                  children={slides.map(slide => <>{slide}</>)}
+                  children={slides.map(slide => <React.Fragment>{slide}</React.Fragment>)}
                   slideStyle={ slidesStyle }
                 />
             </div>
