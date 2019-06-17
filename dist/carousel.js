@@ -20,6 +20,10 @@ var _reactContainerDimensions = require("react-container-dimensions");
 
 var _reactContainerDimensions2 = _interopRequireDefault(_reactContainerDimensions);
 
+var _reactSwipeableViews = require("react-swipeable-views");
+
+var _reactSwipeableViews2 = _interopRequireDefault(_reactSwipeableViews);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45,11 +49,11 @@ var Carousel = function (_Component) {
       var _props = this.props,
           nextElement = _props.nextElement,
           prevElement = _props.prevElement,
-          children = _props.children,
           rootStyle = _props.rootStyle,
-          wrapperSlidesWidth = _props.wrapperSlidesWidth,
           styleControlWrapper = _props.styleControlWrapper,
-          slidePosition = _props.slidePosition;
+          slidesStyle = _props.slidesStyle,
+          activeSlide = _props.activeSlide,
+          slides = _props.slides;
 
       return _react2.default.createElement(
         _reactContainerDimensions2.default,
@@ -59,7 +63,7 @@ var Carousel = function (_Component) {
 
           return _react2.default.createElement(
             "div",
-            { style: _extends({}, rootStyle, { width: width }) },
+            { style: _extends({}, rootStyle) },
             _react2.default.createElement(
               "div",
               { style: styleControlWrapper },
@@ -70,11 +74,19 @@ var Carousel = function (_Component) {
                 onClick: _this2.props.onClickNext
               }) : null
             ),
-            _react2.default.createElement(
-              "div",
-              { style: _extends({}, wrapperSlidesWidth, slidePosition) },
-              children
-            )
+            _react2.default.createElement(_reactSwipeableViews2.default, {
+              enableMouseEvents: true,
+              index: activeSlide,
+              interval: 1000,
+              children: slides.map(function (slide) {
+                return _react2.default.createElement(
+                  _react2.default.Fragment,
+                  null,
+                  slide
+                );
+              }),
+              slideStyle: slidesStyle
+            })
           );
         }
       );
