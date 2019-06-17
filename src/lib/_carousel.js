@@ -25,7 +25,8 @@ const styles = {
   },
   slidesStyle: {
     height: "100%",
-    boxSizing: "border-box"
+    boxSizing: "border-box",
+    display: "flex",
   },
   styleControlWrapper: {
     position: "absolute",

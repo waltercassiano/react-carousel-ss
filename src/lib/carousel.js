@@ -35,7 +35,7 @@ class Carousel extends Component {
                   enableMouseEvents={true}
                   index={activeSlide}
                   interval={1000}
-                  children={slides.map(a => <div style={{display: "flex"}}>{a}</div>)}
+                  children={slides.map(slide => <>{slide}</>)}
                   slideStyle={ slidesStyle }
                 />
             </div>
