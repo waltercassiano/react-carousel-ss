@@ -9,7 +9,9 @@
   "module": "dist/index.js",
   "peerDependencies": {
     "react": "^16.8.6",
-    "react-dom": "16"
+    "react-dom": "16",
+    "lodash": "^4.17.11",
+    "recompose": "^0.30.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -19,13 +21,11 @@
     "babel-preset-react": "^6.24.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "lodash": "^4.17.11",
     "randomcolor": "^0.5.4",
     "react": "^16.8.6",
     "react-dom": "16",
     "react-scripts": "^3.0.1",
-    "react-test-renderer": "^16.8.6",
-    "recompose": "^0.30.0"
+    "react-test-renderer": "^16.8.6"
   },
   "scripts": {
     "test": "react-scripts test --env=jsdom",
