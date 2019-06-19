@@ -15,10 +15,7 @@ class Carousel extends Component {
       slides
     } = this.props;
     return (
-      <ContainerDimensions>
-        {({ width }) => {
-          return (
-            <div style={{ ...rootStyle }}>
+           <div style={{ ...rootStyle }}>
               <div style={styleControlWrapper}>
                 {nextElement
                   ? React.cloneElement(prevElement, {
@@ -32,16 +29,12 @@ class Carousel extends Component {
                   : null}
               </div>
                 <SwipeableViews
-                  enableMouseEvents={true}
                   index={activeSlide}
-                  interval={1000}
                   children={slides.map(slide => <React.Fragment>{slide}</React.Fragment>)}
-                  slideStyle={ slidesStyle }
+                  {...this.props.swipeableViewsProps}
                 />
             </div>
-          );
-        }}
-      </ContainerDimensions>
+      
     );
   }
 }

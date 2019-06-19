@@ -12,9 +12,6 @@ ReactDOM.render(
     prev={true}
     next={true}
     showItemsNumber={3}
-    prevElement={<button style={{ color: "red" }}>prev</button>}
-    nextElement={<button>next</button>}
-    transition={"all 0.5s linear"}
   >
     {slideItens.map((color, index) => (
       <div key={index} style={{ backgroundColor: color }}>

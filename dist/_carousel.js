@@ -23,23 +23,20 @@ var styles = {
     overflow: "hidden",
     width: "100%"
   },
-  wrapperSlidesStyle: {
-    position: "absolute",
-    display: "flex",
-    left: 0,
-    top: 0,
-    boxSizing: "border-box",
-    height: "100%"
-  },
   slidesStyle: {
     height: "100%",
     boxSizing: "border-box",
-    display: "flex"
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
   styleControlWrapper: {
     position: "absolute",
     zIndex: 100,
     top: "50%",
+    transform: "translateY(-50%)",
+    display: "flex",
+    justifyContent: "space-between",
     width: "100%"
   }
 };
@@ -51,7 +48,7 @@ var addClassToSlides = function addClassToSlides(e, styles) {
       className: "rcss-item-" + el,
       key: el,
       style: _extends({
-        width: "100%"
+        flexGrow: 1
       }, styles, e[el].props.style)
     }));
   }
@@ -59,38 +56,38 @@ var addClassToSlides = function addClassToSlides(e, styles) {
   return children;
 };
 
+var defaultSwipeableViewsProps = {
+  slideStyle: _extends({}, styles.slidesStyle),
+  containerStyle: {
+    height: "200px"
+  },
+
+  enableMouseEvents: true
+};
+
 var _mapProps = (0, _recompose.mapProps)(function (props) {
   return {
     prev: (0, _lodash.get)(props, "prev", false),
     next: (0, _lodash.get)(props, "next", false),
     showItemsNumber: (0, _lodash.get)(props, "showItemsNumber", 1),
-    transition: (0, _lodash.get)(props, "transition", "all 0.5s ease"),
-    wrapperHeight: (0, _lodash.get)(props, "wrapperHeight", "200px"),
-    wrapperSlidesStyle: _extends({}, styles.wrapperSlidesStyle, {
-      transition: (0, _lodash.get)(props, "transition", "all 0.5s ease")
-    }, (0, _lodash.get)(props, "wrapperSlidesStyle", {})),
-    rootStyle: _extends({}, styles.rootStyle, (0, _lodash.get)(props, "rootStyle", {}), {
-      height: (0, _lodash.get)(props, "wrapperHeight", "500px")
-    }),
-    slidesStyle: _extends({}, styles.slidesStyle, (0, _lodash.get)(props, "slidesStyle", {}), { width: "100%" }),
+
+    rootStyle: _extends({}, styles.rootStyle, (0, _lodash.get)(props, "rootStyle", {})),
+    slidesStyle: _extends({}, styles.slidesStyle, (0, _lodash.get)(props, "slidesStyle", {})),
     styleControlWrapper: _extends({}, styles.styleControlWrapper, (0, _lodash.get)(props, "styleControlWrapper", {})),
-    children: (0, _lodash.get)(props, "children", null) !== null ? addClassToSlides((0, _lodash.get)(props, "children"), _extends({}, styles.slidesStyle, (0, _lodash.get)(props, "slidesStyle", {}))) : null,
+    children: (0, _lodash.get)(props, "children", null) ? addClassToSlides((0, _lodash.get)(props, "children"), _extends({}, styles.slidesStyle, (0, _lodash.get)(props, "slidesStyle", {}))) : null,
+
     prevElement: props.prev ? _react2.default.cloneElement((0, _lodash.get)(props, "prevElement", _react2.default.createElement(
-      "span",
+      "button",
       null,
       "prev"
-    )), {
-      className: "rcss-prev",
-      style: _extends({}, props.prevElement.props.style, { position: "absolute", left: 0 })
-    }) : null,
+    ))) : null,
     nextElement: props.next ? _react2.default.cloneElement((0, _lodash.get)(props, "nextElement", _react2.default.createElement(
-      "span",
+      "button",
       null,
-      "prev"
-    )), {
-      className: "rcss-next",
-      style: _extends({}, props.prevElement.props.style, { position: "absolute", right: 0 })
-    }) : null
+      "next"
+    ))) : null,
+    swipeableViewsProps: (0, _lodash.get)(props, "swipeableViewsProps", defaultSwipeableViewsProps)
+
   };
 });
 
@@ -101,21 +98,19 @@ exports.default = (0, _recompose.compose)((0, _recompose.setDisplayName)({
 }), (0, _recompose.withState)("slides", "slidesAll", function (props) {
   return (0, _lodash.chunk)((0, _lodash.get)(props, "children", 0), (0, _lodash.get)(props, "showItemsNumber"));
 }), (0, _recompose.withHandlers)({
-  onClickPrev: function onClickPrev(props) {
+  onClickPrev: function onClickPrev(_ref) {
+    var onChangeSlide = _ref.onChangeSlide;
     return function () {
-      var onChangeSlide = props.onChangeSlide;
-
-      onChangeSlide(function (n) {
+      return onChangeSlide(function (n) {
         return n > 0 ? --n : n;
       });
     };
   },
-  onClickNext: function onClickNext(props) {
+  onClickNext: function onClickNext(_ref2) {
+    var onChangeSlide = _ref2.onChangeSlide,
+        numberSlide = _ref2.numberSlide;
     return function () {
-      var onChangeSlide = props.onChangeSlide,
-          numberSlide = props.numberSlide;
-
-      onChangeSlide(function (n) {
+      return onChangeSlide(function (n) {
         return n < numberSlide - 1 ? ++n : n;
       });
     };

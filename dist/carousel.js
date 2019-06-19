@@ -44,8 +44,6 @@ var Carousel = function (_Component) {
   _createClass(Carousel, [{
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       var _props = this.props,
           nextElement = _props.nextElement,
           prevElement = _props.prevElement,
@@ -56,39 +54,28 @@ var Carousel = function (_Component) {
           slides = _props.slides;
 
       return _react2.default.createElement(
-        _reactContainerDimensions2.default,
-        null,
-        function (_ref) {
-          var width = _ref.width;
-
-          return _react2.default.createElement(
-            "div",
-            { style: _extends({}, rootStyle) },
-            _react2.default.createElement(
-              "div",
-              { style: styleControlWrapper },
-              nextElement ? _react2.default.cloneElement(prevElement, {
-                onClick: _this2.props.onClickPrev
-              }) : null,
-              prevElement ? _react2.default.cloneElement(nextElement, {
-                onClick: _this2.props.onClickNext
-              }) : null
-            ),
-            _react2.default.createElement(_reactSwipeableViews2.default, {
-              enableMouseEvents: true,
-              index: activeSlide,
-              interval: 1000,
-              children: slides.map(function (slide) {
-                return _react2.default.createElement(
-                  _react2.default.Fragment,
-                  null,
-                  slide
-                );
-              }),
-              slideStyle: slidesStyle
-            })
-          );
-        }
+        "div",
+        { style: _extends({}, rootStyle) },
+        _react2.default.createElement(
+          "div",
+          { style: styleControlWrapper },
+          nextElement ? _react2.default.cloneElement(prevElement, {
+            onClick: this.props.onClickPrev
+          }) : null,
+          prevElement ? _react2.default.cloneElement(nextElement, {
+            onClick: this.props.onClickNext
+          }) : null
+        ),
+        _react2.default.createElement(_reactSwipeableViews2.default, _extends({
+          index: activeSlide,
+          children: slides.map(function (slide) {
+            return _react2.default.createElement(
+              _react2.default.Fragment,
+              null,
+              slide
+            );
+          })
+        }, this.props.swipeableViewsProps))
       );
     }
   }]);
