@@ -1,6 +1,6 @@
 {
   "name": "react-carousel-ss",
-  "version": "1.0.2-beta",
+  "version": "1.0.3-beta",
   "description": "A simple and small Carousel",
   "repository": "https://github.com/waltercassiano/react-carousel-ss.git",
   "author": "Walter Cassiano <waltercassiano@gmail.com>",
@@ -8,9 +8,8 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "peerDependencies": {
-    "lodash": "^4.17.11",
     "react": "^16.8.6",
-    "react-dom": "16"
+    "react-dom": "^16.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -35,7 +34,8 @@
   "dependencies": {
     "react-container-dimensions": "^1.4.1",
     "react-swipeable-views": "^0.13.3",
-    "recompose": "^0.30.0"
+    "recompose": "^0.30.0",
+    "lodash": "^4.17.11"
   },
   "browserslist": {
     "production": [
